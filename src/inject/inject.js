@@ -30,6 +30,10 @@ var bet_states = { "1":"Player 1 wins! Payouts to Team Red.",
 var better_interval = 100;
 var message_send_interval = 1000;
 
+
+var RED_WINS = 0;
+var BLUE_WINS = 0;
+
 /************************************************************************************************ */
 /* get_page_vars_injected()                                                                       */
 /* description: function which gets injected into the html, is responsible for sending the local  */
@@ -123,32 +127,55 @@ function inject_custom_code(){
 
 }
 
+function set_wager(amount){
+    $("#wager").val(amount);
+}
+
+function bet(player){
+    bet_count++;
+    if(player == "red"){
+	$(".betbuttonred").click();
+    }
+    if(player == "blue"){
+	$(".betbuttonblue").click();
+    }
+}
+
+
+function decide_bet(){
+    set_wager(10);
+    bet("red");
+}
+    
+
+var last_bet_state = "";
 function better(){
     if(changed){ changed=false; } else{	return } // Nothing has changed so do nothing.
 
     // k stuff has changed so lets do something
     try{ console.log(page_data); } catch(e){ } // writes the page_data.
 
-    try{
-	betstate = page_data["betstate"];
+    betstate = page_data["betstate"];
+    if(last_bet_state == "1" || last_bet_state == "2"){
 	if(betstate == "locked"){
-	    console.log("locked...:", bet_states[betstate]);
+	    // ?? 
 	}
 	else if(betstate == "open"){
-	    console.log("locked...:", bet_states[betstate]);
+	    decide_bet();
 	}
-	else if(betstate == "1"){
-    	    console.log("player1 payed out", bet_states[betstate]);
-	}
-	else if(betstate == "1"){
-	    console.log("player2 payed out:",bet_states[betstate]);
-	}
-	else{
-	    console.log("unsure of state:", betstate);
-	}
-    } catch(e){
-	// eh try probably isn't actually needed here, but might be handy
-	console.log("from better():", e);
     }
 
+    if(betstate == "1"){ // red won
+	RED_WINS++;
+    }
+    if(betstate == "2"){ // blue won
+	BLUE_WINS++;
+    }
+
+
+    status_string = "BETCOUNT:"+bet_count+" WINS: RED:"+RED_WINS+" BLUE:"+BLUE_WINS; // +"time:"+new Date().getTime();
+    $($("ul .menu").not("a")[2]).html(status_string);
+
+
+    last_bet_state = betstate; // update the last_bet_state before returning. 
 }
