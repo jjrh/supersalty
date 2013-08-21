@@ -1,0 +1,34 @@
+{
+  "name": "Salty better",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Does salty bets",
+  "homepage_url": "http://voltage.dasblinkenled.org",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "permissions": [
+    "http://www.saltybet.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.saltybet.com/*"
+      ],
+      "css": [
+        "src/inject/inject.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://www.saltybet.com/*"
+      ],
+      "js": [
+        "jquery.js","src/inject/inject.js"
+      ]
+    }
+  ]
+}
