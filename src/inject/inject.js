@@ -33,6 +33,7 @@ var message_send_interval = 1000;
 var bet_count = 0;    /* how many times we have betted */
 var RED_WINS = 0;
 var BLUE_WINS = 0;
+var last_bet_state = "";
 
 /************************************************************************************************ */
 /* get_page_vars_injected()                                                                       */
@@ -87,11 +88,9 @@ function get_page_vars_injected(){
 
     },100); // end setInterval
 
-
 } /* end get_page_vars_injected */
 
 function inject_custom_code(){
-
     /* INJECTED CODE */
     var script = document.createElement("script");
     script.textContent = get_page_vars_injected.toString() + "; get_page_vars_injected();";
@@ -132,7 +131,6 @@ function set_wager(amount){
 }
 
 function bet(player){
-
     if(player == "red"){
 	$(".betbuttonred").click();
 	bet_count++;
@@ -146,31 +144,28 @@ function bet(player){
     }
 }
 
-
 function decide_bet(){
     set_wager(page_data["balance"]/2); // ALL IN BABY!
     bet("red");
 }
 
 function store_red_win(){
-    var time = new Date().getTime();
     var red_total = localStorage.getItem("supersalty.red.total");
     localStorage.setItem("supersalty.red.total",red_total+1);
+
+    var time = new Date().getTime();
     localStorage.setItem("supersalty.wins."+time,"red");
 }
+
 function store_blue_win(){
-    var time = new Date().getTime();
     var blue_total = localStorage.getItem("supersalty.blue.total");
     localStorage.setItem("supersalty.blue.total",blue_total+1);
-    
-//    localStorage.setItem("supersalty.blue.total":localStorage.getItem("supersalty.blue.total")+1);
+
+    var time = new Date().getTime();
     localStorage.setItem("supersalty.wins."+time,"blue");
 }
 
-    
-
-var last_bet_state = "";
-function better(){
+function better(){ /* this is a total mess and needs to be refactored badly. */
     if(changed){ changed=false; } else{	return } // Nothing has changed so do nothing.
 
     betstate = page_data["betstate"];
@@ -190,7 +185,6 @@ function better(){
 	}
     }
 
-
     if(betstate == "1" && last_bet_state != "1"){ // red won
 	RED_WINS++;
 	store_red_win()
@@ -202,10 +196,8 @@ function better(){
 	console.log("blue won!",BLUE_WINS);
     }
 
-
     status_string = "BETCOUNT:"+bet_count+" WINS: RED:"+RED_WINS+" BLUE:"+BLUE_WINS; // +"time:"+new Date().getTime();
     $($("ul .menu").not("a")[2]).html(status_string);
-
 
     last_bet_state = betstate; // update the last_bet_state before returning. 
 }
