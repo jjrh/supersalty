@@ -132,30 +132,55 @@ function set_wager(amount){
 }
 
 function bet(player){
-    bet_count++;
+
     if(player == "red"){
 	$(".betbuttonred").click();
+	bet_count++;
     }
-    if(player == "blue"){
+    else if(player == "blue"){
 	$(".betbuttonblue").click();
+	bet_count++;
+    }
+    else{
+	console.log("something went wrong.... player=",player);
     }
 }
 
 
 function decide_bet(){
-    set_wager(10);
+    set_wager(page_data["balance"]/2); // ALL IN BABY!
     bet("red");
 }
+
+function store_red_win(){
+    var time = new Date().getTime();
+    var red_total = localStorage.getItem("supersalty.red.total");
+    localStorage.setItem("supersalty.red.total",red_total+1);
+    localStorage.setItem("supersalty.wins."+time,"red");
+}
+function store_blue_win(){
+    var time = new Date().getTime();
+    var blue_total = localStorage.getItem("supersalty.blue.total");
+    localStorage.setItem("supersalty.blue.total",blue_total+1);
+    
+//    localStorage.setItem("supersalty.blue.total":localStorage.getItem("supersalty.blue.total")+1);
+    localStorage.setItem("supersalty.wins."+time,"blue");
+}
+
     
 
 var last_bet_state = "";
 function better(){
     if(changed){ changed=false; } else{	return } // Nothing has changed so do nothing.
 
+    betstate = page_data["betstate"];
+    if(last_bet_state == betstate){ // data will change when the balance updates.
+	return
+    }
     // k stuff has changed so lets do something
     try{ console.log(page_data); } catch(e){ } // writes the page_data.
 
-    betstate = page_data["betstate"];
+
     if(last_bet_state == "1" || last_bet_state == "2"){
 	if(betstate == "locked"){
 	    // ?? 
@@ -165,11 +190,16 @@ function better(){
 	}
     }
 
-    if(betstate == "1"){ // red won
+
+    if(betstate == "1" && last_bet_state != "1"){ // red won
 	RED_WINS++;
+	store_red_win()
+	console.log("red won!",RED_WINS);
     }
-    if(betstate == "2"){ // blue won
+    if(betstate == "2" && last_bet_state != "1"){ // blue won
 	BLUE_WINS++;
+	store_blue_win()
+	console.log("blue won!",BLUE_WINS);
     }
 
 
