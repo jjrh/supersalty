@@ -1,0 +1,22 @@
+                                          ____       
+   _______  ______  ___  ______________ _/ / /___  __
+  / ___/ / / / __ \/ _ \/ ___/ ___/ __ `/ / __/ / / /
+ (__  ) /_/ / /_/ /  __/ /  (__  ) /_/ / / /_/ /_/ / 
+/____/\__,_/ .___/\___/_/  /____/\__,_/_/\__/\__, /  
+          /_/                               /____/
+(making salty bets supersalty)
+-------------------------------------------------------------
+
+The extension that makes saltybets even more salty! ( http://www.saltybet.com/ )
+
+To install go to chrome://extensions/ click "Load unpacked extension..."
+and navigate to the folder the code is located in.
+
+Probably lots of bugs, so enjoy.
+
+At the moment we always bet on red for 50% of your current pot.
+
+fair warning, the code will immedially start betting when able. 
+(in other words, if you have a crazy amount of saltybucks don't use this)
+
+
