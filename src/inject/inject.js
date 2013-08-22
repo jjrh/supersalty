@@ -127,7 +127,7 @@ function inject_custom_code(){
 }
 
 function set_wager(amount){
-    $("#wager").val(amount);
+    $("#wager").val(Math.round(amount));
 }
 
 function bet(player){
