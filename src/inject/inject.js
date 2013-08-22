@@ -151,7 +151,7 @@ function decide_bet(){
 
 function store_red_win(){
     var red_total = localStorage.getItem("supersalty.red.total");
-    localStorage.setItem("supersalty.red.total",red_total+1);
+    localStorage.setItem("supersalty.red.total",parseInt(red_total)+1);
 
     var time = new Date().getTime();
     localStorage.setItem("supersalty.wins."+time,"red");
@@ -159,7 +159,7 @@ function store_red_win(){
 
 function store_blue_win(){
     var blue_total = localStorage.getItem("supersalty.blue.total");
-    localStorage.setItem("supersalty.blue.total",blue_total+1);
+    localStorage.setItem("supersalty.blue.total",parseInt(blue_total)+1);
 
     var time = new Date().getTime();
     localStorage.setItem("supersalty.wins."+time,"blue");
