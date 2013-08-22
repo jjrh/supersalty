@@ -18,7 +18,7 @@ var last_message = "";  /* string of the last json message received */
 var page_data = null;   /* json representation of the pages useful variables */
 var changed = false;   /* if things have changed we should do something */
 
-var bet_count = 0;    /* how many times we have betted */
+
 var betted=false;     /* have we already betted this turn? */
 
 var bet_states = { "1":"Player 1 wins! Payouts to Team Red.",
@@ -30,7 +30,7 @@ var bet_states = { "1":"Player 1 wins! Payouts to Team Red.",
 var better_interval = 100;
 var message_send_interval = 1000;
 
-
+var bet_count = 0;    /* how many times we have betted */
 var RED_WINS = 0;
 var BLUE_WINS = 0;
 
